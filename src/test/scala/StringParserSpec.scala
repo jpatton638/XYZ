@@ -4,12 +4,7 @@ class StringParserSpec extends WordSpec with MustMatchers {
 
   val parser = new StringParser
 
-  "StringParser" should {
-
-    "return error string if invalid argument is given" in {
-      parser.parse("r") mustEqual "Incorrect String"
-      parser.parse("r51ud9%") mustEqual "Incorrect String"
-    }
+  "parse" should {
 
     "convert 'x' to 'y'" in {
       parser.parse("x") mustEqual "y"
@@ -28,5 +23,23 @@ class StringParserSpec extends WordSpec with MustMatchers {
       parser.parse("xyz") mustEqual "yzx"
     }
 
+    "replace invalid chars with '?' before passing to filterError" in {
+      parser.parse("x9yxz7y") mustEqual "Incorrect String"
+    }
+  }
+
+  "filterError" should {
+
+    "return error string if invalid character indicator is found" in {
+      parser.filterError("?") mustEqual "Incorrect String"
+      parser.filterError("xzy?x") mustEqual "Incorrect String"
+    }
+  }
+
+  "giveOptions" should {
+
+    "give alternative chars for each char given" in {
+      parser.giveOptions("x") mustEqual List("y", "z")
+    }
   }
 }

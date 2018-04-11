@@ -6,11 +6,25 @@ class StringParser {
                       case 'y' => "z"
                       case 'z' => "x"
                       case _ => "?"
-                    }
-      if (processed.contains("?")) {
-        "Incorrect String"
-      } else {
-        processed.mkString("")
-      }
+                    }.mkString("")
+    filterError(processed)
+  }
+
+  def giveOptions(input: String): List[String] = {
+
+    input.flatMap {
+      case 'x' => List("y", "z")
+      case 'y' => List("z", "x")
+      case 'z' => List("x", "y")
+      case _ => List("?")
+    }.toList
+  }
+
+  def filterError(processed: String): String = {
+    if (processed.contains("?")) {
+      "Incorrect String"
+    } else {
+      processed
+    }
   }
 }
