@@ -41,5 +41,9 @@ class StringParserSpec extends WordSpec with MustMatchers {
     "give alternative chars for each char given" in {
       parser.giveOptions("x") mustEqual List("y", "z")
     }
+
+    "handle multiple chars" in {
+      parser.giveOptions("xyz") mustEqual List("yyz", "zyz", "xzz", "xxz", "xyx", "xyy")
+    }
   }
 }

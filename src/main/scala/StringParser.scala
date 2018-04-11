@@ -12,12 +12,16 @@ class StringParser {
 
   def giveOptions(input: String): List[String] = {
 
-    input.flatMap {
-      case 'x' => List("y", "z")
-      case 'y' => List("z", "x")
-      case 'z' => List("x", "y")
-      case _ => List("?")
-    }.toList
+    val x = input.zipWithIndex.flatMap {
+      case (char, index) => char match {
+        case x @ 'x' => List(s"${input.replace('x', 'y')}", s"${input.replace('x', 'z')}")
+        case y @ 'y' => List(s"${input.replace('y', 'z')}", s"${input.replace('y', 'x')}")
+        case z @ 'z' => List(s"${input.replace('z', 'x')}", s"${input.replace('z', 'y')}")
+        case _ => List("?")
+
+      }
+    }
+    x.toList
   }
 
   def filterError(processed: String): String = {
