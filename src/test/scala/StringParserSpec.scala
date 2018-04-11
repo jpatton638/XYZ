@@ -23,16 +23,8 @@ class StringParserSpec extends WordSpec with MustMatchers {
       parser.parse("xyz") mustEqual "yzx"
     }
 
-    "replace invalid chars with '?' before passing to filterError" in {
-      parser.parse("x9yxz7y") mustEqual "Incorrect String"
-    }
-  }
-
-  "filterError" should {
-
     "return error string if invalid character indicator is found" in {
-      parser.filterError("?") mustEqual "Incorrect String"
-      parser.filterError("xzy?x") mustEqual "Incorrect String"
+      parser.parse("x9yxz7y") mustEqual "Incorrect String"
     }
   }
 
